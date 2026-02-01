@@ -23,13 +23,13 @@ export default TaskItem;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',       // Dispone gli elementi in orizzontale
-    justifyContent: 'space-between', // Spinge gli elementi agli estremi (Sinistra <-> Destra)
-    alignItems: 'center',       // Centra verticalmente
-    padding: 15,                // Spazio interno
-    borderBottomWidth: 1,       // Linea separatrice sotto
-    borderBottomColor: '#ccc',  // Colore della linea
-    backgroundColor: '#fff',    // Sfondo bianco
+    flexDirection: 'row',       
+    justifyContent: 'space-between', 
+    alignItems: 'center',       
+    padding: 15,                
+    borderBottomWidth: 1,      
+    borderBottomColor: '#ccc',  
+    backgroundColor: '#fff',    
   },
   title: {
     fontSize: 16,
@@ -38,15 +38,15 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 14,
-    color: '#666',              // Grigio scuro per info secondarie
+    color: '#666',             
     marginTop: 4,
   },
   textDone: {
-    color: 'green',             // Verde per confermare
+    color: 'green',            
     fontWeight: 'bold',
   },
   textTodo: {
-    color: 'red',               // Rosso per attirare l'attenzione
+    color: 'red',              
     fontWeight: 'bold',
   }
 });

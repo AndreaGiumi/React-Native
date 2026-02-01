@@ -25,7 +25,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* Ho aggiunto TASKS.length per completare la richiesta "X su 5" */}
+      {}
       <Text style={styles.header}>
          Ha completato {tasks.length} su {TASKS.length}
       </Text>
@@ -33,17 +33,15 @@ export default function App() {
       <FlatList
         data={TASKS}
         extraData={tasks}
-        keyExtractor={(item) => item.id} // Anche qui, meglio chiamarlo 'item' per coerenza, ma 'task' qui funzionava
+        keyExtractor={(item) => item.id} 
         
-        // --- CORREZIONI QUI SOTTO ---
-        renderItem={({ item }) => (  // 1. Usa ({ item }), non ({ task })
+        renderItem={({ item }) => (  
           <TaskItem
-            task={item}             // 2. Passiamo 'item' come prop 'task'
+            task={item}             
             isCompleted={tasks.includes(item.id)}
             onToggle={toggleTasks}
           />
         )}
-        // ----------------------------
       />
     </View>
   );
