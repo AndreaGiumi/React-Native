@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, TextInput, View, StyleSheet, Alert } from "react-native";
 import { db } from "./../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
-const AddEditUser = ({ navigation }) => {
+import { collection, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
+
+const AddEditUser = ({ navigation, route }) => {
     const [nome, setNome] = useState("");
     const [cognome, setCognome] = useState("");
     const [email, setEmail] = useState("");
     const [telefono, setTelefono] = useState("");
 
+    const userEdit = route.params ? route.params.user : null;
+
+    console.log(userEdit)
     const handleSave = async () => {
         // Logica per salvare o aggiornare l'utente
         if (!nome || !cognome || !email || !telefono) {
@@ -15,16 +19,30 @@ const AddEditUser = ({ navigation }) => {
             return;
         }
         try {
-            await addDoc(collection(db, "users"), {
-                nome,
-                cognome,
-                email,
-                telefono,
-                createAt: new Date(),
-            });
-            Alert.alert("Successo", "Utente salvato con successo.");
-            navigation.goBack()
-            
+            if (userEdit) {
+                // aggiorna utente esistente
+                const userRef=doc(db, "users", userEdit.id)
+                await updateDoc(userRef, {
+                    nome,
+                    cognome,
+                    email,
+                    telefono,
+                })
+                Alert.alert("Successo", "Utente modificato con successo.");
+
+            } else {
+
+                await addDoc(collection(db, "users"), {
+                    nome,
+                    cognome,
+                    email,
+                    telefono,
+                    createAt: new Date(),
+                });
+                Alert.alert("Successo", "Utente salvato con successo.");
+            }
+                navigation.goBack()
+
         } catch (error) {
             Alert.alert(
                 "Errore",
@@ -32,6 +50,23 @@ const AddEditUser = ({ navigation }) => {
             );
         }
     };
+
+
+
+
+    useEffect(() => {
+        if (userEdit) {
+            setNome(userEdit.nome)
+            setCognome(userEdit.cognome)
+            setEmail(userEdit.email)
+            setTelefono(userEdit.telefono)
+            navigation.setOptions({ title: "Modifica utente" })
+
+        } else {
+            navigation.setOptions({ title: "Aggiungi utente" })
+
+        }
+    }, [userEdit, navigation]);
     return (
         <View style={styles.container}>
             <TextInput
@@ -66,7 +101,6 @@ const AddEditUser = ({ navigation }) => {
 };
 
 export default AddEditUser;
-
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: "#f5f5fe", padding: 20 },

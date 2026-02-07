@@ -1,0 +1,1 @@
+export const BASE_URL = "https://todoapp-64d2d-default-rtdb.europe-west1.firebasedatabase.app"
